@@ -5,7 +5,7 @@ const { Schema, model } = require('mongoose')
 const listingSchema = new Schema(
     {
         tenant: [{type: Schema.Types.ObjectId, ref: 'Tenant'}],//many:many, every listing has multiple tenants and every tenant has multiple listings
-        ratings: [{type: Schema.Types.ObjectId, ref: 'Rating'}],//1:many, every listing has multiple ratings!
+        likes: [{type: Schema.Types.ObjectId, ref: 'Tenant'}],//1:many, every listing has multiple ratings!
         reviews: [{type: Schema.Types.ObjectId, ref: 'Review'}],//1:many, every listing can have multiple reviews
         propType: String,
         streetAddress: String,

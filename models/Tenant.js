@@ -60,7 +60,7 @@ const tenantSchema = new Schema(
             "Weekday evenings",
           ],
         },
-    ratings: [{ type: Schema.Types.ObjectId, ref: "Rating" }], //1:many, rated listings
+    likes: [{ type: Schema.Types.ObjectId, ref: "Listing" }], //1:many, rated listings
     reviews: [{ type: Schema.Types.ObjectId, ref: "Review" }], //1:many
     listings: [{ type: Schema.Types.ObjectId, ref: "Listing" }], //1:many, matched listings
   },

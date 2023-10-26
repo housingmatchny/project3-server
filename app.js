@@ -11,7 +11,8 @@ var tenantRouter = require('./routes/profile');
 var authRouter = require('./routes/auth')
 var reviewRouter = require('./routes/reviews')
 var listingRouter = require('./routes/listings')
-var oneTimeRouter = require('./routes/ignore/one-time')
+// var oneTimeRouter = require('./routes/ignore/one-time')
+var likesRouter = require('./routes/likes')
 
 var app = express();
 
@@ -36,7 +37,8 @@ app.use('/profile', tenantRouter)
 app.use('/auth', authRouter)
 app.use('/reviews', reviewRouter)
 app.use('/listings', listingRouter)
-app.use('/one-time', oneTimeRouter)
+app.use('/likes', likesRouter)
+// app.use('/one-time', oneTimeRouter)
 
 mongoose
   .connect(process.env.MONGODB_URI)

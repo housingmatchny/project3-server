@@ -15,7 +15,7 @@ const reviewSchema = new Schema(
             max: 5,
             default: 0,
         },//1:1, every review has one star rating
-        listings: {type: Schema.Types.ObjectId, ref: 'Listing'}//every review is specific to one listing
+        listing: {type: Schema.Types.ObjectId, ref: 'Listing'}//every review is specific to one listing
     },
     {
         timestamps: true
