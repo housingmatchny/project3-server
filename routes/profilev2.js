@@ -21,7 +21,7 @@ router.get("/", isAuthenticated, (req, res, next) => {
     });
 });
 
-//ADD AND SAVE NEW REVIEW to database  -- not this route: /listings/details/:listingId/add-review  //QUESTION: even though we do not have this url showing to client, we are making a post to the url so the listing route can pull info from here?
+//ADD AND SAVE NEW REVIEW to database  -- not this route: /listings/details/:listingId/add-review
 router.post('/add-review', isAuthenticated, (req, res, next) => {
   Review.create(req.body) 
   .then((createdReview) => {
@@ -81,23 +81,6 @@ router.post('/edit-review/:reviewId', (req, res, next) => {
   });
 
 })
-
-//PULL PREVIOUS REVIEW
-router.get('/reviews/edit-review/:reviewId', isAuthenticated, (req, res, next) => {
-
-  Review.findById(req.params.reviewId)
-  .then((response) => {
-    res.json(response)
-  })
-  .catch((err) => {
-    console.log(err);
-    res.json(err);
-    next(err);
-  });
-
-})
-
-
 //DELETE REVIEW and remove from database
 router.get('/delete-review/:reviewId', (req, res, next) => {
   
@@ -113,60 +96,5 @@ router.get('/delete-review/:reviewId', (req, res, next) => {
   });
 
 })
-
-
-// //UPDATE A REVIEW (followed Yelp's pathing)
-// router.get("/:reviewId", isAuthenticated, (req, res, next) => {
-  
-//   const { reviewId } = req.params;
-
-//   //check if the tenant exists
-//   if (!mongoose.Types.ObjectId.isValid(reviewId)) {
-//     res.status(400).json({ message: "Specified id is not valid" });
-//     return;
-//   }
-
-// //Show the owner details of the review
-// Review.findById(reviewId)
-// .populate("tenant")
-// .then((review) => res.status(200).json(review))
-// .catch((error) => res.json(error));
-// });
-
-// router.put("/:reviewId/edit", (req, res, next) => {
-// const { reviewId } = req.params;
-
-// if (!mongoose.Types.ObjectId.isValid(reviewId)) {
-// res.status(400).json({ message: "Specified id is not valid" });
-// return;
-// }
-
-// Review.findByIdAndUpdate(reviewId, req.body, { new: true })
-// .then((updatedReview) => {
-//     res.json(updatedReview)
-// })
-// .catch((error) => res.json(error));
-// });
-
-// //DELETE A REVIEW 
-// router.delete("/delete/:reviewId", isAuthenticated, (req, res, next) => {
-//   const { reviewId } = req.params;
-
-//   if (!mongoose.Types.ObjectId.isValid(reviewId)) {
-//     res.status(400).json({ message: "Specified id is not valid" });
-//     return;
-//   }
-
-//   Review.findByIdAndRemove(reviewId)
-//     .then((deleted) =>
-//       res.json({
-//         deleted,
-//         message: `Review with ${reviewId} has been removed successfully.`,
-//       })
-//     )
-//     .catch((error) => res.json(error));
-// });
-
-
 
 module.exports = router;

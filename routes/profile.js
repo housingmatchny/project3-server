@@ -3,7 +3,6 @@
 var express = require("express");
 var router = express.Router();
 const Tenant = require("../models/Tenant");
-var mongoose = require("mongoose") //must declare mongoose to use mongoose.Types.ObjectId
 
 const isAuthenticated = require('../middleware/isAuthenticated')
 

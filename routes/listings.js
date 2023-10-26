@@ -22,6 +22,7 @@ router.get("/", isAuthenticated, (req, res, next) => {
 router.get('/details/:listingId', isAuthenticated, (req, res, next) => {
 
   Listing.findById(req.params.listingId)//listing id
+  //deep populate, hence we add "path: """ structure
   .populate({
     path: 'reviews', 
     populate: {path: 'tenant'}
