@@ -22,7 +22,7 @@ router.get('/add-like/:id', isAuthenticated, function(req, res, next) {
         {new: true}
     )
     .then((updatedListing) => {
-    //add listing id to array of liked listings
+    //add listing id to array of liked listings on tenant document
         Tenant.findByIdAndUpdate(
             req.tenant._id,
             {
@@ -30,7 +30,7 @@ router.get('/add-like/:id', isAuthenticated, function(req, res, next) {
             },
             {new: true}
         )
-        .populate('likes listings') //add reviews when registered
+        .populate('likes listings reviews') //add reviews when registered
         .then((updatedTenant) => {
 
             const { _id, email, name, image, about, boroughPreference, maxPrice, beds, baths, householdSize, pets, program, programAmt, creditScore, annualIncome, employmentStatus, moveInDate, viewingAvailability, likes, reviews, listings } = updatedTenant;
@@ -80,7 +80,7 @@ router.get('/remove-like/:id', isAuthenticated, function(req, res, next) {
             },
             {new: true}
         )
-        .populate('likes listings') //add reviews when registered
+        .populate('likes listings reviews') //add reviews when registered
         .then((updatedTenant) => {
 
             const { _id, email, name, image, about, boroughPreference, maxPrice, beds, baths, householdSize, pets, program, programAmt, creditScore, annualIncome, employmentStatus, moveInDate, viewingAvailability, likes, reviews, listings } = updatedTenant;

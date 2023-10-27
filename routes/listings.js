@@ -8,6 +8,7 @@ const isAuthenticated = require('../middleware/isAuthenticated')
 //PULL ALL LISTINGS (placeholder)
 router.get("/", isAuthenticated, (req, res, next) => {
   Listing.find() //find everything so empty parentheses
+  .populate('reviews')
     .then((response) => {
       res.json(response);
     })

@@ -4,6 +4,8 @@ const Tenant = require("../models/Tenant");
 const Review = require("../models/Review");
 const Listing = require("../models/Listing")
 
+const jwt = require("jsonwebtoken");
+
 const isAuthenticated = require('../middleware/isAuthenticated')
 
 
@@ -21,7 +23,23 @@ router.get("/", isAuthenticated, (req, res, next) => {
     });
 });
 
-//ADD AND SAVE NEW REVIEW to database  -- not this route: /listings/details/:listingId/add-review  //QUESTION: even though we do not have this url showing to client, we are making a post to the url so the listing route can pull info from here?
+// //PULL INFO BY TENANT ID?  find tenant id
+// router.get("/:tenantId", isAuthenticated, (req, res, next) => {
+  
+//   Tenant.findById(req.params.tenantId)
+//   .then((foundTenantInfo) => {
+//     // console.log("Tenant's reviews==>", foundTenantReviews)
+//     res.json(foundTenantInfo)
+//   })
+//   .catch((err) => {
+//     console.log(err)
+//     res.json(err)
+//     next(err)
+//   })
+// })
+
+
+//ADD AND SAVE NEW REVIEW to database  -- not this route: /listings/details/:listingId/add-review  
 router.post('/add-review', isAuthenticated, (req, res, next) => {
   Review.create(req.body) 
   .then((createdReview) => {
@@ -66,7 +84,7 @@ router.post('/add-review', isAuthenticated, (req, res, next) => {
 })
 
 //EDIT REVIEW and update in database
-router.post('/edit-review/:reviewId', (req, res, next) => {
+router.put('/edit-review/:reviewId', (req, res, next) => {
   // if review exists- no need to check b/c edit review only comes up for the owner
 
   Review.findByIdAndUpdate(req.params.reviewId, req.body, {new:true}) //two arguments with one optional: id, request body, 3rd optional (new: true - shows what has been updated)
@@ -83,10 +101,13 @@ router.post('/edit-review/:reviewId', (req, res, next) => {
 })
 
 //PULL PREVIOUS REVIEW
-router.get('/reviews/edit-review/:reviewId', isAuthenticated, (req, res, next) => {
+//when we get a request a this url, this is how we handle it: we search for the specific review
+router.get('/edit-review/:reviewId', isAuthenticated, (req, res, next) => {
 
   Review.findById(req.params.reviewId)
   .then((response) => {
+    //is this the previous review?
+    console.log("Previous review ==>", response)
     res.json(response)
   })
   .catch((err) => {
@@ -99,7 +120,7 @@ router.get('/reviews/edit-review/:reviewId', isAuthenticated, (req, res, next) =
 
 
 //DELETE REVIEW and remove from database
-router.get('/delete-review/:reviewId', (req, res, next) => {
+router.delete('/delete-review/:reviewId', (req, res, next) => {
   
   Review.findByIdAndDelete(req.params.reviewId)
   .then((deletedReview) => {
@@ -113,59 +134,6 @@ router.get('/delete-review/:reviewId', (req, res, next) => {
   });
 
 })
-
-
-// //UPDATE A REVIEW (followed Yelp's pathing)
-// router.get("/:reviewId", isAuthenticated, (req, res, next) => {
-  
-//   const { reviewId } = req.params;
-
-//   //check if the tenant exists
-//   if (!mongoose.Types.ObjectId.isValid(reviewId)) {
-//     res.status(400).json({ message: "Specified id is not valid" });
-//     return;
-//   }
-
-// //Show the owner details of the review
-// Review.findById(reviewId)
-// .populate("tenant")
-// .then((review) => res.status(200).json(review))
-// .catch((error) => res.json(error));
-// });
-
-// router.put("/:reviewId/edit", (req, res, next) => {
-// const { reviewId } = req.params;
-
-// if (!mongoose.Types.ObjectId.isValid(reviewId)) {
-// res.status(400).json({ message: "Specified id is not valid" });
-// return;
-// }
-
-// Review.findByIdAndUpdate(reviewId, req.body, { new: true })
-// .then((updatedReview) => {
-//     res.json(updatedReview)
-// })
-// .catch((error) => res.json(error));
-// });
-
-// //DELETE A REVIEW 
-// router.delete("/delete/:reviewId", isAuthenticated, (req, res, next) => {
-//   const { reviewId } = req.params;
-
-//   if (!mongoose.Types.ObjectId.isValid(reviewId)) {
-//     res.status(400).json({ message: "Specified id is not valid" });
-//     return;
-//   }
-
-//   Review.findByIdAndRemove(reviewId)
-//     .then((deleted) =>
-//       res.json({
-//         deleted,
-//         message: `Review with ${reviewId} has been removed successfully.`,
-//       })
-//     )
-//     .catch((error) => res.json(error));
-// });
 
 
 
