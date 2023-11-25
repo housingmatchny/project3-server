@@ -6,9 +6,10 @@ const Listing = require("../models/Listing")
 const isAuthenticated = require('../middleware/isAuthenticated')
 
 //PULL ALL LISTINGS (placeholder)
-router.get("/", isAuthenticated, (req, res, next) => {
+router.get("/", (req, res, next) => {
   Listing.find() //find everything so empty parentheses
-  .populate('reviews')
+  .populate({path: "reviews", 
+              populate: {path: "tenant"}})
     .then((response) => {
       res.json(response);
     })

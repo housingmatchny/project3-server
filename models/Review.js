@@ -5,10 +5,7 @@ const { Schema, model } = require('mongoose')
 const reviewSchema = new Schema(
     {
         tenant: {type: Schema.Types.ObjectId, ref: 'Tenant'},//1:1, every review has one owner
-        comment: {
-            type: String,
-            maxLength: 200
-        },//1:1, every review has one comment
+        comment: String,//1:1, every review has one comment
         stars: {
             type: Number,
             min: 0,

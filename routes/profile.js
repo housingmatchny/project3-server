@@ -20,7 +20,18 @@ router.get("/:tenantId", isAuthenticated, (req, res, next) => {
   // }
 
   Tenant.findById(tenantId)
-    .populate("reviews likes listings") //.populate("reviews likes listings") only after those collections are registered; populating before any data exists will cause errors
+    .populate("likes listings") //.populate("reviews likes listings") only after those collections are registered; populating before any data exists will cause errors
+    .populate({
+      path: "reviews",
+      populate: {
+        path: "listing",
+        populate: {path: 'reviews'}
+      }
+    })
+    .populate({
+      path: "likes",
+      populate: { path: "reviews" }
+    })
     .then((populatedProfile) => {
       const { _id, email, name, image, about, boroughPreference, maxPrice, beds, baths, householdSize, pets, program, programAmt, creditScore, annualIncome, employmentStatus, moveInDate, viewingAvailability, reviews, likes, listings } = populatedProfile;
 
