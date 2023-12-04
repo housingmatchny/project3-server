@@ -41,12 +41,12 @@ router.get("/:tenantId", isAuthenticated, (req, res, next) => {
       // console.log("checking payload ==>", payload)
 
       // Create and sign the token
-      const authToken = jwt.sign(payload, process.env.SECRET, {
-        algorithm: "HS256",
-        expiresIn: "6h",
-      });
+      // const authToken = jwt.sign(payload, process.env.SECRET, {
+      //   algorithm: "HS256",
+      //   expiresIn: "6h",
+      // });
       
-      res.status(200).json({user: populatedProfile, authToken})
+      res.status(200).json({user: populatedProfile})
 
     })
     .catch((error) => res.json(error));
