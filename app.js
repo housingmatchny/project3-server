@@ -24,7 +24,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(
     cors({
-      origin: [process.env.REACT_APP_URI]  // <== URL of our future React app
+      // origin: [process.env.REACT_APP_URI]  // <== URL of our future React app
+      origin: '*' // <== wildcard to allow all origins
     })
   );
 
