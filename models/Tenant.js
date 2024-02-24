@@ -20,16 +20,19 @@ const tenantSchema = new Schema(
         },
     boroughPreference: {
         type: String,
-        enum: ["Staten Island", "Manhattan", "Bronx", "Brooklyn", "Queens"],
+        enum: ["Staten Island", "Manhattan", "Bronx", "Brooklyn", "Queens", "Any borough"],
         },
     maxPrice: Number,
-    beds: Number,
-    baths: Number,
-    householdSize: Number,
-    pets: Number,
+    beds: String,
+    baths: String,
+    householdSize: String,
+    pets: {
+      type: String,
+      enum: ["Allowed", "Not Allowed"]
+    },
     program: {
         type: String,
-        enum: ["CityFHEPS", "FHEPS", "HASA", "Rapid Re-housing"],
+        enum: ["CityFHEPS", "FHEPS", "EHV", "Section 8", "Rapid Re-housing"],
         },
     programAmt: Number,
     creditScore: Number,
@@ -44,10 +47,7 @@ const tenantSchema = new Schema(
             "Other",
           ],
         },
-    moveinDate: {
-        type: String,
-        default: "ASAP",
-        },
+    moveinDate: Date,
     viewingAvailability: {
         type: String,
         enum: [

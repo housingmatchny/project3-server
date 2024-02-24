@@ -138,7 +138,7 @@ router.get('/verify', isAuthenticated, (req, res, next) => {
     res.status(200).json(req.tenant);
   });
 
-//LOGOUT, or do we do this on frontend?
+//LOGOUT - handle on frontend
 
 
 module.exports = router;

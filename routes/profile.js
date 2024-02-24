@@ -52,7 +52,7 @@ router.get("/:tenantId", isAuthenticated, (req, res, next) => {
     .catch((error) => res.json(error));
 });
 
-//UPDATE PREFERENCES PAGE
+//UPDATE PREFERENCES PAGE - why is there no get for the preferences or personal pages?
 router.put("/preferences/:tenantId", isAuthenticated, (req, res, next) => {
   const { tenantId } = req.params;
 
